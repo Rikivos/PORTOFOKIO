@@ -28,13 +28,13 @@ $(document).ready(function() {
 
 // typing animation  script
 var typed = new Typed(".typing",{
-    strings: ["Web Developer","Influencer","Freelancer"],
+    strings: ["Junior Web Developer","Gamer","Freelancer"],
     typeSpeed: 120,
     backSpeed: 80,
     loop: true
 })
 var typed = new Typed(".typing-2",{
-    strings: ["Web Developer","Influencer","Freelancer"],
+    strings: ["Junior Web Developer","Gamer","Freelancer"],
     typeSpeed: 120,
     backSpeed: 80,
     loop: true
@@ -45,9 +45,32 @@ var typed = new Typed(".typing-3",{
     backSpeed: 80,
     loop: true
 })
+document.querySelector('.menu-btn').addEventListener('click', function() {
+    document.querySelector('.sidebar').classList.toggle('show');
+});
+
+window.addEventListener('scroll', function() {
+    const scrollBtn = document.querySelector('.scroll-up-btn');
+    if (window.scrollY > 100) {
+        scrollBtn.classList.add('show');
+    } else {
+        scrollBtn.classList.remove('show');
+    }
+});
+
+document.querySelector('.scroll-up-btn').addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
 
 
 function toggleMenu() {
         const links = document.getElementById('links');
         links.classList.toggle('active');
     }
+document.querySelector('.menu-btn').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('show');
+    });
+    
