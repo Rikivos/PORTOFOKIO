@@ -28,23 +28,18 @@ $(document).ready(function() {
 
 // typing animation  script
 var typed = new Typed(".typing",{
-    strings: ["Junior Web Developer","Gamer","Freelancer"],
+    strings: ["Junior Web Developer","Gamer",""],
     typeSpeed: 120,
     backSpeed: 80,
     loop: true
 })
 var typed = new Typed(".typing-2",{
-    strings: ["Junior Web Developer","Gamer","Freelancer"],
+    strings: ["Junior Web Developer","Gamer",""],
     typeSpeed: 120,
     backSpeed: 80,
     loop: true
 })
-var typed = new Typed(".typing-3",{
-    strings: ["Skills","Expriences"],
-    typeSpeed: 120,
-    backSpeed: 80,
-    loop: true
-})
+
 document.querySelector('.menu-btn').addEventListener('click', function() {
     document.querySelector('.sidebar').classList.toggle('show');
 });
