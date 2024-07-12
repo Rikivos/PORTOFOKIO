@@ -106,14 +106,30 @@ html, body {
     height: 100vh;
     min-height: 500px;
     background-color: #14213D;
+    background-image: url('https://keystoneacademic-res.cloudinary.com/image/upload/v1696427949/articles/educationscom/article-hero-image-14298.jpg');
+    background-size: cover;
+    background-position: center;
     color: #FFF;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    text-align: center;
+    position: relative;
+}
+
+.home::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 33, 61, 0.7); /* Overlay to ensure text visibility */
 }
 
 .home .container {
+    z-index: 1; /* Ensure the content is above the overlay */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,6 +142,7 @@ html, body {
     max-width: 600px;
     padding: 20px;
     font-family: "Montserrat", sans-serif;
+    color: #FFF;
 }
 
 .btns {
@@ -169,10 +186,6 @@ html, body {
     border: 3px solid #14213D;
 }
 
-.home .container .right {
-    display: none; /* Hide on smaller screens */
-}
-
 .text-1 {
     font-size: 24px; /* Adjusted for smaller screens */
 }
@@ -196,92 +209,6 @@ html, body {
 }
 
 /* Responsive Styles */
-@media(max-width:1250px) {
-    .home .container {
-        flex-direction: column;
-    }
-
-    .home .container .home-content {
-        margin-right: 20px;
-        max-width: 100%;
-        margin-top: 50px;
-    }
-}
-
-@media(max-width:1150px) {
-    .home-content {
-        padding: 20px;
-    }
-
-    .text-2 {
-        font-size: 60px;
-    }
-
-    .text-1 {
-        font-size: 30px;
-    }
-
-    .text-3 {
-        font-size: 35px;
-    }
-}
-
-@media(max-width:1000px) {
-    .home .container {
-        padding-left: 30px;
-        padding-right: 30px;
-        flex-direction: column; /* Changed to column for better stacking */
-    }
-
-    .text-1 {
-        font-size: 25px;
-    }
-
-    .text-3 {
-        font-size: 30px;
-    }
-
-    .home-content {
-        margin-top: 20px;
-        width: 100%;
-    }
-
-    .logo a {
-        font-size: 30px;
-    }
-
-    .menu li a {
-        font-size: 18px;
-        margin-left: -10px;
-    }
-}
-
-@media(max-width:950px) {
-    .home .container .right {
-        display: none;
-    }
-
-    .btns a {
-        font-size: 20px;
-        padding: 15px 15px;
-    }
-
-    .home-content {
-        width: 100%;
-    }
-
-    .text-1 {
-        font-size: 35px;
-    }
-
-    .text-2 {
-        font-size: 80px;
-    }
-
-    .text-3 {
-        font-size: 45px;
-    }
-}
 @media(max-width:950px) {
     .home-content {
         padding: 20px;
@@ -305,149 +232,6 @@ html, body {
         padding: 10px 20px;
     }
 }
-@media(max-width:500px) {
-    .text-1 {
-        font-size: 18px;
-    }
-
-    .text-2 {
-        font-size: 28px;
-    }
-
-    .text-3 {
-        font-size: 20px;
-    }
-
-    .btns a {
-        font-size: 14px;
-        padding: 8px 16px;
-    }
-
-    .home-content {
-        padding: 10px;
-    }
-}
-
-@media(max-width:770px) {
-    .menu-btn {
-        display: block;
-        z-index: 5;
-    }
-
-    .navbar .menu {
-        position: fixed;
-        height: 100vh;
-        padding-top: 50px;
-        width: 100%;
-        left: -100%;
-        top: 0;
-        text-align: center;
-        background: #000000;
-        transition: all 1s ease-in-out;
-    }
-
-    .navbar .menu.active {
-        left: 0;
-    }
-
-    .menu-btn i.active:before {
-        content: "\f00d";
-    }
-
-    .menu {
-        display: block;
-    }
-
-    .container li {
-        margin-bottom: 20px;
-    }
-
-    .container li a {
-        font-size: 25px;
-    }
-
-    .text-1 {
-        font-size: 35px;
-        font-weight: 500;
-    }
-
-    .text-2 {
-        font-size: 65px;
-        font-weight: 600;
-    }
-
-    .text-3 {
-        font-size: 40px;
-        font-weight: 500;
-    }
-
-    .text-3 span {
-        font-weight: 600;
-    }
-}
-
-@media(max-width:680px) {
-    .text-1 {
-        font-size: 30px;
-        font-weight: 500;
-    }
-
-    .text-2 {
-        font-size: 60px;
-        font-weight: 600;
-    }
-
-    .text-3 {
-        font-size: 32px;
-        font-weight: 500;
-    }
-
-    .text-3 span {
-        font-weight: 600;
-    }
-}
-
-@media(max-width:640px) {
-    .text-1 {
-        font-size: 30px;
-        font-weight: 500;
-    }
-
-    .text-2 {
-        font-size: 55px;
-        font-weight: 700;
-    }
-
-    .text-3 {
-        font-size: 30px;
-        font-weight: 500;
-    }
-
-    .text-3 span {
-        font-weight: 600;
-    }
-}
-
-@media(max-width:600px) {
-    .text-1 {
-        font-size: 40px;
-        font-weight: 500;
-    }
-
-    .text-2 {
-        font-size: 90px;
-        font-weight: 700;
-    }
-
-    .text-3 {
-        font-size: 45px;
-        font-weight: 500;
-    }
-
-    .text-3 span {
-        font-weight: 700;
-    }
-}
 
 @media(max-width:500px) {
     .text-1 {
@@ -472,28 +256,6 @@ html, body {
     }
 }
 
-@media(max-width:380px) {
-    .btns a {
-        font-size: 18px;
-        padding: 10px 15px;
-    }
-
-    .home-content {
-        padding: 10px;
-    }
-
-    .text-1 {
-        font-size: 28px;
-    }
-
-    .text-2 {
-        font-size: 50px;
-    }
-
-    .text-3 {
-        font-size: 30px;
-    }
-}
 
 /* General Section Styling */
 section {
