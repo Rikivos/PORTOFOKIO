@@ -101,6 +101,7 @@ html, body {
 }
 
 /* Home Section */
+/* Home Section */
 .home {
     height: 100vh;
     min-height: 500px;
@@ -109,23 +110,28 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .home .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
 }
 
 .home-content {
-    width: 600px;
-    margin-right: 100px;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
     font-family: "Montserrat", sans-serif;
 }
 
 .btns {
     margin-top: 50px;
     display: flex;
+    justify-content: center;
     gap: 20px;
     transition: all 1s ease-in-out;
 }
@@ -135,7 +141,7 @@ html, body {
     border-radius: 20px;
     font-family: "Montserrat", sans-serif;
     font-weight: 500;
-    font-size: 28px;
+    font-size: 18px; /* Adjusted for better fit on small screens */
 }
 
 .btn1 {
@@ -164,29 +170,22 @@ html, body {
 }
 
 .home .container .right {
-    height: 500px;
-    text-align: center;
-}
-
-.home .container .right img {
-    max-width: 100%;
-    height: 500px;
-    object-fit: contain;
+    display: none; /* Hide on smaller screens */
 }
 
 .text-1 {
-    font-size: 30px;
+    font-size: 24px; /* Adjusted for smaller screens */
 }
 
 .text-2 {
-    font-size: 70px;
+    font-size: 48px; /* Adjusted for smaller screens */
     font-weight: 700;
     font-family: "Montserrat", sans-serif;
     margin-top: 10px;
 }
 
 .text-3 {
-    font-size: 40px;
+    font-size: 32px; /* Adjusted for smaller screens */
     margin-top: 10px;
 }
 
@@ -198,6 +197,10 @@ html, body {
 
 /* Responsive Styles */
 @media(max-width:1250px) {
+    .home .container {
+        flex-direction: column;
+    }
+
     .home .container .home-content {
         margin-right: 20px;
         max-width: 100%;
@@ -224,9 +227,10 @@ html, body {
 }
 
 @media(max-width:1000px) {
-    section .container {
+    .home .container {
         padding-left: 30px;
         padding-right: 30px;
+        flex-direction: column; /* Changed to column for better stacking */
     }
 
     .text-1 {
@@ -239,7 +243,7 @@ html, body {
 
     .home-content {
         margin-top: 20px;
-        width: 800px;
+        width: 100%;
     }
 
     .logo a {
@@ -276,6 +280,51 @@ html, body {
 
     .text-3 {
         font-size: 45px;
+    }
+}
+@media(max-width:950px) {
+    .home-content {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .text-1 {
+        font-size: 20px;
+    }
+
+    .text-2 {
+        font-size: 36px;
+    }
+
+    .text-3 {
+        font-size: 24px;
+    }
+
+    .btns a {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+@media(max-width:500px) {
+    .text-1 {
+        font-size: 18px;
+    }
+
+    .text-2 {
+        font-size: 28px;
+    }
+
+    .text-3 {
+        font-size: 20px;
+    }
+
+    .btns a {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .home-content {
+        padding: 10px;
     }
 }
 
@@ -402,42 +451,58 @@ html, body {
 
 @media(max-width:500px) {
     .text-1 {
-        font-size: 30px;
-        font-weight: 500;
+        font-size: 18px;
     }
 
     .text-2 {
-        font-size: 75px;
-        font-weight: 800;
+        font-size: 28px;
     }
 
     .text-3 {
-        font-size: 40px;
-        font-weight: 500;
+        font-size: 20px;
     }
 
-    .text-3 span {
-        font-weight: 700;
+    .btns a {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .home-content {
+        padding: 10px;
     }
 }
 
 @media(max-width:380px) {
     .btns a {
-        font-size: 20px;
-        padding: 15px 20px;
+        font-size: 18px;
+        padding: 10px 15px;
+    }
+
+    .home-content {
+        padding: 10px;
+    }
+
+    .text-1 {
+        font-size: 28px;
+    }
+
+    .text-2 {
+        font-size: 50px;
+    }
+
+    .text-3 {
+        font-size: 30px;
     }
 }
 
-
-/* all similar  */
-
-section{
+/* General Section Styling */
+section {
     padding: 80px 40px;
     background-color: #14213D;
     color: white;
 }
 
-section .title{
+section .title {
     text-align: center;
     font-size: 65px;
     position: relative;
@@ -446,7 +511,7 @@ section .title{
     padding-bottom: 20px;
 }
 
-section .title::before{
+section .title::before {
     content: "";
     position: absolute;
     width: 325px;
@@ -456,7 +521,8 @@ section .title::before{
     transform: translateX(-50%);
     background-color: white;
 }
-section .title::after{
+
+section .title::after {
     position: absolute;
     padding: 7px;
     font-size: 28px;
@@ -466,7 +532,6 @@ section .title::after{
     left: 50%;
     transform: translateX(-50%);
 }
-
 
 /* about section */
 
