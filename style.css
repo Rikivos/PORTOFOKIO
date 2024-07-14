@@ -1053,8 +1053,8 @@ section .title::after {
 .projects .card {
     position: relative;
     overflow: hidden;
-    width: 300px; /* Fixed width */
-    height: 200px; /* Fixed height */
+    width: 400px; /* Increased width */
+    height: 300px; /* Increased height */
     border-radius: 10px;
 }
 
@@ -1064,8 +1064,8 @@ section .title::after {
     object-fit: cover;
     transition: transform 0.3s ease;
     border-radius: 10px;
+    border: 5px solid #fca311; /* Added border */
 }
-
 
 .projects .card:hover img {
     transform: scale(1.1);
@@ -1105,7 +1105,7 @@ section .title::after {
 @media (max-width: 870px) {
     .projects .card {
         width: 100%;
-        max-width: 300px;
+        max-width: 400px;
         height: auto;
     }
 
@@ -1129,7 +1129,7 @@ section .title::after {
 
     .projects .card {
         width: 100%;
-        max-width: 250px;
+        max-width: 350px; /* Adjusted max-width */
         height: auto;
     }
 
@@ -1149,7 +1149,7 @@ section .title::after {
 
     .projects .card {
         width: 100%;
-        max-width: 200px;
+        max-width: 300px; /* Adjusted max-width */
         height: auto;
     }
 
