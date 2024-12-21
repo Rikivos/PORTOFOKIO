@@ -1,219 +1,209 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Camera App</title>
-</head>
-<body>
-    <!-- Video Display and Controls -->
-    <div class="display-cover">
-        <video autoplay></video>
-        <canvas class="d-none"></canvas>
-
-        <div class="video-options">
-            <select class="custom-select">
-                <option value="">Select camera</option>
-            </select>
-        </div>
-
-        <div class="controls">
-            <button class="btn btn-danger play" title="Play">
-                <i data-feather="play-circle"></i>
-            </button>
-            <button class="btn btn-info pause d-none" title="Pause">
-                <i data-feather="pause"></i>
-            </button>
-            <button class="btn btn-outline-success screenshot d-none" title="Screenshot">
-                <i data-feather="image"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- Image Upload Form -->
-    <form id="imageForm" class="mt-3">
-        <div class="form-group">
-            <label for="imageUpload">Uploaded Image:</label>
-            <img 
-                id="uploadedImage" 
-                src="" 
-                alt="Uploaded Image" 
-                class="d-none img-thumbnail mt-2" 
-                style="max-width: 400px;">
-        </div>
-    </form>
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Modal dengan Kamera</title>
     <style>
-        .screenshot-image {
-            width: 150px;
-            height: 90px;
-            border-radius: 4px;
-            border: 2px solid whitesmoke;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            position: absolute;
-            bottom: 5px;
-            left: 10px;
-            background: white;
-        }
-
-        .display-cover {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 70%;
-            margin: 5% auto;
-            position: relative;
-        }
-
         video {
             width: 100%;
+            border-radius: 8px;
             background: rgba(0, 0, 0, 0.2);
         }
-
-        .video-options {
-            position: absolute;
-            left: 20px;
-            top: 30px;
-        }
-
         .controls {
-            position: absolute;
-            right: 20px;
-            top: 20px;
             display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
         }
-
-        .controls > button {
-            width: 45px;
-            height: 45px;
-            text-align: center;
-            border-radius: 100%;
-            margin: 0 6px;
-            background: transparent;
+        .controls button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
-
-        @media (max-width: 400px) {
-            .controls {
-                flex-direction: column;
-            }
-
-            .controls button {
-                margin: 5px 0;
-            }
+        .controls button.screenshot {
+            background-color: #00B541;
+            color: white;
         }
-
-        .controls button svg {
-            height: 20px;
-            width: 18px;
-            color: inherit;
+        .screenshot-preview {
+            margin-top: 10px;
+            display: none;
         }
-
-        .controls button:nth-child(1) {
-            border: 2px solid #D2002E;
-            color: #D2002E;
-        }
-
-        .controls button:nth-child(2) {
-            border: 2px solid #008496;
-            color: #008496;
-        }
-
-        .controls button:nth-child(3) {
-            border: 2px solid #00B541;
-            color: #00B541;
+        .screenshot-preview img {
+            width: 100%;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.2);
         }
     </style>
+</head>
+<body class="bg-gray-100">
 
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script>
-        feather.replace();
+<!-- Modal -->
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg w-1/2 shadow-lg p-6 overflow-y-auto max-h-[90vh]">
+        <h2 class="text-xl font-bold mb-4">Tambahkan Kegiatan Mentoring</h2>
 
-        const controls = document.querySelector('.controls');
-        const cameraOptions = document.querySelector('.video-options > select');
-        const video = document.querySelector('video');
-        const canvas = document.querySelector('canvas');
-        const [play, pause, screenshot] = [...controls.querySelectorAll('button')];
-        let streamStarted = false;
+        <form action="{{ route('logbook.add') }}" method="POST">
+            <!-- Nama Kegiatan -->
+            @csrf
+            <div class="mb-4">
+                <label for="report_name" class="block text-sm font-medium mb-1">Nama Kegiatan</label>
+                <input type="text" id="report_name" name="report_name"
+                    class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
+            </div>
 
-        const constraints = {
-            video: {
-                width: { ideal: 1280 },
-                height: { ideal: 720 },
-            }
-        };
+            <!-- Tanggal -->
+            <div class="mb-4">
+                <label for="upload_date" class="block text-sm font-medium mb-1">Tanggal</label>
+                <input type="date" id="upload_date" name="upload_date"
+                    class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
+            </div>
 
-        play.onclick = () => {
-            if (streamStarted) {
-                video.play();
-                play.classList.add('d-none');
-                pause.classList.remove('d-none');
-            } else {
-                navigator.mediaDevices.getUserMedia(constraints)
-                    .then(startStream)
-                    .catch(console.error);
-            }
-        };
+            <!-- Waktu -->
+            <div class="mb-4">
+                <label for="waktu" class="block text-sm font-medium mb-1">Waktu</label>
+                <div class="flex items-center space-x-2">
+                    <input name="start_time" type="time" class="w-1/2 border rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
+                    <span>s/d</span>
+                    <input name="end_time" type="time" class="w-1/2 border rounded-lg p-2 focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
 
-        pause.onclick = () => {
-            video.pause();
-            play.classList.remove('d-none');
-            pause.classList.add('d-none');
-        };
+            <!-- Uraian Mentoring -->
+            <div class="mb-4">
+                <label for="uraian" class="block text-sm font-medium mb-1">Uraian Mentoring</label>
+                <textarea name="description" id="description" rows="4" class="w-full border rounded-lg p-2 focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
 
-        screenshot.onclick = () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-            const imageURL = canvas.toDataURL('image/webp');
-            const uploadedImage = document.getElementById('uploadedImage');
-            uploadedImage.src = imageURL;
-            uploadedImage.classList.remove('d-none');
+            <!-- Media Kamera -->
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Media Kamera</label>
+                <button type="button" id="openCameraButton"
+                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+                    Buka Kamera
+                </button>
+                <div id="cameraContainer" class="mt-4 hidden">
+                    <video autoplay></video>
+                    <canvas class="hidden"></canvas>
+                    <div class="controls">
+                        <button class="play">Play</button>
+                        <button class="pause hidden"></button>
+                        <button class="screenshot hidden bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mt-2" type="button">Foto</button>
+                    </div>
+                </div>
+            </div>        
+            <!-- Screenshot Preview -->
+            <div class="screenshot-preview" style="display: none;">
+                <h3 class="text-sm font-medium mb-2">Gambar Foto</h3>
+                <img id="screenshotImage" alt="Screenshot" />
+                <button id="deleteScreenshotButton" type="button" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 mt-2">
+                    Hapus Foto
+                </button>
+            </div>                    
+            <!-- Buttons -->
+            <div class="flex justify-end space-x-2">
+                <button type="button" id="closeModal"
+                    class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                    Batal
+                </button>
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                    Selesai
+                </button>
+            </div>
+        </form>
+    </div>
+</div> 
 
-            const link = document.createElement('a');
-            link.href = imageURL;
-            link.download = 'screenshot.webp';
-            link.click();
-        };
+<!-- Button to Open Modal -->
+<button id="openModal" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 m-6">
+    Tambahkan Kegiatan
+</button>
 
-        const startStream = (stream) => {
-            video.srcObject = stream;
-            streamStarted = true;
-            play.classList.add('d-none');
-            pause.classList.remove('d-none');
-            screenshot.classList.remove('d-none');
-        };
+<script>
+   // Script to Handle Modal From logbook
+// Modal Handling
+const modal = document.getElementById('modal');
+const openModalButton = document.getElementById('openModal');
+const closeModalButton = document.getElementById('closeModal');
 
-        cameraOptions.onchange = async () => {
-            const updatedConstraints = { ...constraints, deviceId: { exact: cameraOptions.value } };
-            navigator.mediaDevices.getUserMedia(updatedConstraints)
-                .then(startStream)
-                .catch(console.error);
-        };
+openModalButton.onclick = () => modal.classList.remove('hidden');
+closeModalButton.onclick = () => modal.classList.add('hidden');
 
-        navigator.mediaDevices.enumerateDevices()
-            .then((devices) => {
-                const videoDevices = devices.filter(device => device.kind === 'videoinput');
-                cameraOptions.innerHTML = videoDevices.map(device => `
-                    <option value="${device.deviceId}">${device.label}</option>
-                `).join('');
-            })
-            .catch(console.error);
+// Camera Handling
+const openCameraButton = document.getElementById('openCameraButton');
+const cameraContainer = document.getElementById('cameraContainer');
+const video = cameraContainer.querySelector('video');
+const canvas = cameraContainer.querySelector('canvas');
+const screenshotImage = document.getElementById('screenshotImage');
+const screenshotPreview = document.querySelector('.screenshot-preview');
+const [playButton, pauseButton, screenshotButton] = cameraContainer.querySelectorAll('button');
 
-        document.getElementById('openCameraButton').onclick = () => {
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then((stream) => {
-                    document.getElementById('videoElement').srcObject = stream;
-                    document.getElementById('cameraContainer').style.display = 'block';
-                    document.getElementById('closeButton').onclick = () => {
-                        stream.getTracks().forEach(track => track.stop());
-                        document.getElementById('cameraContainer').style.display = 'none';
-                    };
-                })
-                .catch(() => alert('Could not access the camera.'));
-        };
-    </script>
+let streamStarted = false;
+
+const constraints = { video: { width: { ideal: 1280 }, height: { ideal: 720 } } };
+
+const startStream = (stream) => {
+    video.srcObject = stream;
+    streamStarted = true;
+    playButton.classList.toggle('hidden', true);
+    pauseButton.classList.toggle('hidden', false);
+    screenshotButton.classList.toggle('hidden', false);
+    openCameraButton.textContent = 'Tutup Kamera';
+};
+
+const stopStream = () => {
+    video.srcObject?.getTracks().forEach(track => track.stop());
+    video.srcObject = null;
+    streamStarted = false;
+    openCameraButton.textContent = 'Buka Kamera';
+};
+
+openCameraButton.onclick = async () => {
+    if (streamStarted) {
+        stopStream();
+        cameraContainer.classList.add('hidden');
+    } else {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia(constraints);
+            startStream(stream);
+            cameraContainer.classList.remove('hidden');
+        } catch (error) {
+            alert('Tidak dapat mengakses kamera.');
+        }
+    }
+};
+
+playButton.onclick = video.play.bind(video);
+pauseButton.onclick = video.pause.bind(video);
+
+pauseButton.onclick = video.pause.bind(video) || (() => {
+    pauseButton.classList.add('hidden');
+    playButton.classList.remove('hidden');
+});
+
+screenshotButton.onclick = () => {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    canvas.getContext('2d').drawImage(video, 0, 0);
+    const imageURL = canvas.toDataURL('image/jpeg/png/jpg');
+    
+    // Tampilkan gambar di form
+    screenshotImage.src = imageURL;
+    screenshotPreview.style.display = 'block';
+};
+
+// Script to Handle Delete Screenshot
+const deleteScreenshotButton = document.getElementById('deleteScreenshotButton');
+deleteScreenshotButton.onclick = () => {
+    // Delete Image from form
+    screenshotImage.src = '';
+    screenshotPreview.style.display = 'none';
+};
+
+</script>
+
 </body>
 </html>
